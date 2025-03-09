@@ -20,17 +20,28 @@
         <button class="btn btn-primary" onclick="showRandomQuote('uplifting')">😢 Sad</button>
         <button class="btn btn-primary" onclick="showRandomQuote('anxiety')">😰 Anxious</button>
     </div>
-    <br />
+    <br/>
 
     <!-- Display Motivational Quote -->
     <div id="quote-section"></div>
-    <br />
+    <br/>
 
     <!-- Mood History -->
     <div id="mood-history">
         <h2>Past Moods</h2>
         <ul id="history-list"></ul>
     </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Quote</th>
+            <th scope="col">Author</th>
+        </tr>
+        </thead>
+        <tbody id="history-table-body">
+        <!--  innerHTML of the tbody -->
+        </tbody>
+    </table>
 </div>
 
 <div id="card-list"></div>

@@ -61,6 +61,24 @@ const displayQuote = (quote, author) => {
     card.innerHTML = quoteCard(quote, author);
 };
 
+const displayHistory = () => {
+    // TODO:
+    //   - for each element in the history we need to add 1 <tr> containing 2 <td> to the page
+    const historyTableBody = document.getElementById("history-table-body");
+
+    const content =
+        applicationState
+            .history
+            .map((quote) => {
+                return `<tr>
+                    <td>${quote.q}</td>
+                    <td>${quote.a}</td>
+                </tr>`
+            })
+
+    historyTableBody.innerHTML = content.join("")
+}
+
 /**
  * Generate a random number between min and max.
  *
@@ -72,14 +90,6 @@ const randomNumberBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// TODO Ingrid:
-//   1. Implement the algorithm:
-//      - Fetch the list of quotes
-//      - If I have a quote in my state (the `applicationState.quote` field is not null), then add the `applicationState.quote` value to the history
-//      - select randomly a quote from the list of fetched quotes
-//      - update my `applicationState.quote` with this selected randomly quote
-//      - update the display with the new state
-//
 
 /**
  * Function to handle mood button clicks
@@ -105,6 +115,7 @@ const showRandomQuote = async (mood) => {
     const selectQuoteAuthor = selectedQuote.a;
 
     displayQuote(selectedQuoteText, selectQuoteAuthor);
+    displayHistory()
 };
 
 
