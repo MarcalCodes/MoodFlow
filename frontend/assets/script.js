@@ -1,3 +1,8 @@
+const applicationState = {
+    quote: null,
+    history: [],
+}
+
 /**
  * Function to fetch a quote based on the selected mood
  */
@@ -38,9 +43,9 @@ const quoteCard = (quote, author) => {
 
 
 /**
- * Function to display the fetched quote in a card
+ * Displays the quote state in a card in the webpage
  */
-const displayQuote = (quote, author) => {
+const displayQuote = () => {
     const quoteSection = document.getElementById("quote-section");
 
     // Create or update the card
@@ -53,8 +58,41 @@ const displayQuote = (quote, author) => {
         quoteSection.appendChild(card);
     }
 
+    const quote = applicationState.quote.q
+    const author = applicationState.quote.a
+
     card.innerHTML = quoteCard(quote, author);
 };
+
+/**
+ * Displays the history state in the webpage
+ */
+const displayHistory = () => {
+    const historyTableBody = document.getElementById("history-table-body");
+
+    // computes the table new content
+    const tableContent =
+        applicationState
+            .history
+            .map((quote) => {
+                return `<tr>
+                    <td>${quote.q}</td>
+                    <td>${quote.a}</td>
+                </tr>`
+            })
+            .join("")
+
+    // Inject the new table content in the UI
+    historyTableBody.innerHTML = tableContent
+}
+
+/**
+ * Updates the webpage with the current state
+ */
+const updateUiWithNewState = () => {
+    displayQuote()
+    displayHistory()
+}
 
 /**
  * Generate a random number between min and max.
@@ -74,16 +112,22 @@ const showRandomQuote = async (mood) => {
     // Fetch the quotes corresponding to the mood from the BE
     const fetchedQuotes = await fetchCorrespondingQuotes(mood);
 
+    // Update the `history` state
+    const hasPreviousQuote = applicationState.quote != null
+    if (hasPreviousQuote) {
+        applicationState.history.unshift(applicationState.quote);
+    }
+
     // Select a random quote from the fetched quotes
     const lastArrayIndex = fetchedQuotes.length - 1
     const selectedQuoteIndex = randomNumberBetween(0, lastArrayIndex)
     const selectedQuote = fetchedQuotes[selectedQuoteIndex];
 
-    // Display the selected quote
-    const selectedQuoteText = selectedQuote.q;
-    const selectQuoteAuthor = selectedQuote.a;
-    displayQuote(selectedQuoteText, selectQuoteAuthor);
+    // update the `quote` state
+    applicationState.quote = selectedQuote;
 
+    // Update the UI with the new state
+    updateUiWithNewState()
 };
 
 
