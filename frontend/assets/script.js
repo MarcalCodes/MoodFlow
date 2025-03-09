@@ -100,7 +100,7 @@ const showRandomQuote = async (mood) => {
 
     const hasPreviousQuote = applicationState.quote != null
     if (hasPreviousQuote) {
-        applicationState.history.push(applicationState.quote);
+        applicationState.history.unshift(applicationState.quote);
     }
 
     // Select a random quote from the fetched quotes
