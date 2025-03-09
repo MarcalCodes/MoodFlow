@@ -16,7 +16,7 @@ const fetchCorrespondingQuotes = async (mood) => {
 };
 
 // Function to display the fetched quote in a card
-const displayQuote = (quote) => {
+const displayQuote = (quote, author) => {
     let quoteSection = document.getElementById("quote-section");
 
     // Create or update the card
@@ -28,7 +28,7 @@ const displayQuote = (quote) => {
         quoteSection.appendChild(card);
     }
 
-    card.innerHTML = `<p>${quote}</p>`;
+    card.innerHTML = `<p>${quote} - ${author}</p>`;
 };
 
 // Generate a random number between min and max.
@@ -52,7 +52,11 @@ const showRandomQuote = async (mood) => {
 
     // Display the selected quote
     const selectedQuoteText = selectedQuote.q;
-    displayQuote(selectedQuoteText);
+    // TODO Ingrid:
+    //   3. Change the displayQuote function code to also display the author
+    const selectQuoteAuthor = selectedQuote.a;
+    displayQuote(selectedQuoteText, selectQuoteAuthor);
+
 };
 
 
