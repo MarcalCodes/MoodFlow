@@ -1,4 +1,6 @@
-// Function to fetch a quote based on the selected mood
+/**
+ * Function to fetch a quote based on the selected mood
+ */
 const fetchCorrespondingQuotes = async (mood) => {
     try {
         // Fetch data from local API
@@ -15,32 +17,59 @@ const fetchCorrespondingQuotes = async (mood) => {
     }
 };
 
-// Function to display the fetched quote in a card
-const displayQuote = (quote) => {
-    let quoteSection = document.getElementById("quote-section");
+/**
+ * takes a quote and an author and returns an HTML Card (as a String) to nicely display the quote and the author
+ *
+ * (Needs Bootstrap)
+ *
+ * Comes from https://getbootstrap.com/docs/5.3/components/card/
+ */
+const quoteCard = (quote, author) => {
+    return `<div class="card">
+        <div class="card-header">Quote</div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p>${quote}</p>
+                <footer class="blockquote-footer">${author}</footer>
+            </blockquote>
+        </div>
+    </div>`
+}
+
+
+/**
+ * Function to display the fetched quote in a card
+ */
+const displayQuote = (quote, author) => {
+    const quoteSection = document.getElementById("quote-section");
 
     // Create or update the card
     let card = document.getElementById("quote-card");
-    if (!card) {
+    const cardNotPresentInThePage = !card
+    if (cardNotPresentInThePage) {
         card = document.createElement("div");
         card.id = "quote-card";
         card.className = "quote-card";
         quoteSection.appendChild(card);
     }
 
-    card.innerHTML = `<p>${quote}</p>`;
+    card.innerHTML = quoteCard(quote, author);
 };
 
-// Generate a random number between min and max.
-// min and max are included.
-//
-// Comes from https://stackoverflow.com/a/7228322/29476271
-//
+/**
+ * Generate a random number between min and max.
+ *
+ * min and max are included.
+ *
+ * Comes from https://stackoverflow.com/a/7228322/29476271
+ */
 const randomNumberBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// Function to handle mood button clicks
+/**
+ * Function to handle mood button clicks
+ */
 const showRandomQuote = async (mood) => {
     // Fetch the quotes corresponding to the mood from the BE
     const fetchedQuotes = await fetchCorrespondingQuotes(mood);
@@ -52,7 +81,9 @@ const showRandomQuote = async (mood) => {
 
     // Display the selected quote
     const selectedQuoteText = selectedQuote.q;
-    displayQuote(selectedQuoteText);
+    const selectQuoteAuthor = selectedQuote.a;
+    displayQuote(selectedQuoteText, selectQuoteAuthor);
+
 };
 
 
