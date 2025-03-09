@@ -1,7 +1,17 @@
 const applicationState = {
     quote: null,
     history: [],
+    searchValue: ""
 }
+
+// Bind the "keyup" event on the "Find quote" input
+const searchQuoteInputElement = document.getElementById("findQuote")
+searchQuoteInputElement
+    .addEventListener("keyup", () => {
+        // Update the state 'searchValue' and update the UI with this new filter
+        applicationState.searchValue = searchQuoteInputElement.value
+        displayHistory()
+    })
 
 /**
  * Function to fetch a quote based on the selected mood
@@ -70,10 +80,16 @@ const displayQuote = () => {
 const displayHistory = () => {
     const historyTableBody = document.getElementById("history-table-body");
 
+    // Select the history to display by applying the user filter
+    let filteredHistory = applicationState.history
+    const quoteFilterIsNonEmpty = applicationState.searchValue !== ""
+    if (quoteFilterIsNonEmpty) {
+        filteredHistory = applicationState.history.filter((quote) => quote.q.includes(applicationState.searchValue))
+    }
+
     // computes the table new content
     const tableContent =
-        applicationState
-            .history
+        filteredHistory
             .map((quote) => {
                 return `<tr>
                     <td>${quote.q}</td>
@@ -129,7 +145,6 @@ const showRandomQuote = async (mood) => {
     // Update the UI with the new state
     updateUiWithNewState()
 };
-
 
 // What and How separation:
 // -----------------------
