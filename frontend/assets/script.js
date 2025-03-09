@@ -43,9 +43,9 @@ const quoteCard = (quote, author) => {
 
 
 /**
- * Function to display the fetched quote in a card
+ * Displays the quote state in a card in the webpage
  */
-const displayQuote = (quote, author) => {
+const displayQuote = () => {
     const quoteSection = document.getElementById("quote-section");
 
     // Create or update the card
@@ -58,15 +58,20 @@ const displayQuote = (quote, author) => {
         quoteSection.appendChild(card);
     }
 
+    const quote = applicationState.quote.q
+    const author = applicationState.quote.a
+
     card.innerHTML = quoteCard(quote, author);
 };
 
+/**
+ * Displays the history state in the webpage
+ */
 const displayHistory = () => {
-    // TODO:
-    //   - for each element in the history we need to add 1 <tr> containing 2 <td> to the page
     const historyTableBody = document.getElementById("history-table-body");
 
-    const content =
+    // computes the table new content
+    const tableContent =
         applicationState
             .history
             .map((quote) => {
@@ -75,8 +80,18 @@ const displayHistory = () => {
                     <td>${quote.a}</td>
                 </tr>`
             })
+            .join("")
 
-    historyTableBody.innerHTML = content.join("")
+    // Inject the new table content in the UI
+    historyTableBody.innerHTML = tableContent
+}
+
+/**
+ * Updates the webpage with the current state
+ */
+const updateUiWithNewState = () => {
+    displayQuote()
+    displayHistory()
 }
 
 /**
@@ -90,7 +105,6 @@ const randomNumberBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
 /**
  * Function to handle mood button clicks
  */
@@ -98,6 +112,7 @@ const showRandomQuote = async (mood) => {
     // Fetch the quotes corresponding to the mood from the BE
     const fetchedQuotes = await fetchCorrespondingQuotes(mood);
 
+    // Update the `history` state
     const hasPreviousQuote = applicationState.quote != null
     if (hasPreviousQuote) {
         applicationState.history.unshift(applicationState.quote);
@@ -108,14 +123,11 @@ const showRandomQuote = async (mood) => {
     const selectedQuoteIndex = randomNumberBetween(0, lastArrayIndex)
     const selectedQuote = fetchedQuotes[selectedQuoteIndex];
 
+    // update the `quote` state
     applicationState.quote = selectedQuote;
 
-    // Display the selected quote
-    const selectedQuoteText = selectedQuote.q;
-    const selectQuoteAuthor = selectedQuote.a;
-
-    displayQuote(selectedQuoteText, selectQuoteAuthor);
-    displayHistory()
+    // Update the UI with the new state
+    updateUiWithNewState()
 };
 
 
