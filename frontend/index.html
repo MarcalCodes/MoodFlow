@@ -28,9 +28,18 @@
 
     <!-- Mood History -->
     <h2>Past Moods</h2>
-    <div class="mb-3">
-        <label for="findQuote" class="form-label">Find Quote</label>
-        <input type="text" class="form-control" id="findQuote">
+    <div class="d-flex flex-row align-items-end mb-3">
+        <div class="flex-fill w-100">
+            <label for="findQuote" class="form-label">Find Quote</label>
+            <input type="text" class="form-control" id="findQuote">
+        </div>
+        <div class="mx-2 mb-2 flex-fill">by</div>
+        <div class="flex-fill w-50">
+            <select id="findQuoteBy" class="form-select">
+                <option value="by_content">Quote Content</option>
+                <option value="by_author">Quote Author</option>
+            </select>
+        </div>
     </div>
     <table class="table">
         <thead>
