@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodFlow - Mood Tracker</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>MoodFlow - How are you feeling today?</h1>
+
+    <!-- Mood Selection -->
+    <div id="mood-selector">
+        <button class="mood-btn" onclick="showRandomQuote('happy')">😊 Happy</button>
+        <button class="mood-btn" onclick="showRandomQuote('uplifting')">😢 Sad</button>
+        <button class="mood-btn" onclick="showRandomQuote('anxiety')">😰 Anxious</button>
+    </div>
+
+    <!-- Display Motivational Quote -->
+    <div id="quote-section">
+        <h2>Motivational Quote</h2>
+        <p id="quote">Click on a mood to receive a quote!</p>
+    </div>
+
+    <!-- Mood History -->
+    <div id="mood-history">
+        <h2>Past Moods</h2>
+        <ul id="history-list"></ul>
+    </div>
+</div>
+
+<div id="card-list"></div>
+<script src="assets/script.js"></script>
+</body>
+</html>
+
+
+<footer> </footer>
