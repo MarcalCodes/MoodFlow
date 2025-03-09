@@ -1,7 +1,8 @@
 const applicationState = {
     quote: null,
     history: [],
-    searchValue: ""
+    searchValue: "",
+    searchBy: "by_content",
 }
 
 // Bind the "keyup" event on the "Find quote" input
@@ -10,6 +11,14 @@ searchQuoteInputElement
     .addEventListener("keyup", () => {
         // Update the state 'searchValue' and update the UI with this new filter
         applicationState.searchValue = searchQuoteInputElement.value
+        displayHistory()
+    })
+
+const searchQuoteDropdownElement = document.getElementById("findQuoteBy")
+searchQuoteDropdownElement
+    .addEventListener("change", () => {
+        // Update the state 'searchValue' and update the UI with this new filter
+        applicationState.searchBy = searchQuoteDropdownElement.value
         displayHistory()
     })
 
@@ -84,7 +93,16 @@ const displayHistory = () => {
     let filteredHistory = applicationState.history
     const quoteFilterIsNonEmpty = applicationState.searchValue !== ""
     if (quoteFilterIsNonEmpty) {
-        filteredHistory = applicationState.history.filter((quote) => quote.q.includes(applicationState.searchValue))
+        filteredHistory = applicationState.history.filter((quote) => {
+            switch (applicationState.searchBy) {
+                case "by_content":
+                    return quote.q.toLowerCase().includes(applicationState.searchValue.toLowerCase())
+                case "by_author":
+                    return quote.a.toLowerCase().includes(applicationState.searchValue.toLowerCase())
+                default:
+                    throw new Error("Should never happen: No 'search_by' selected, which is an impossible state")
+            }
+        })
     }
 
     // computes the table new content
