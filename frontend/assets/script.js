@@ -52,8 +52,6 @@ const showRandomQuote = async (mood) => {
 
     // Display the selected quote
     const selectedQuoteText = selectedQuote.q;
-    // TODO Ingrid:
-    //   3. Change the displayQuote function code to also display the author
     const selectQuoteAuthor = selectedQuote.a;
     displayQuote(selectedQuoteText, selectQuoteAuthor);
 
