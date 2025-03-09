@@ -1,3 +1,8 @@
+const applicationState = {
+    quote: null,
+    history: [],
+}
+
 /**
  * Function to fetch a quote based on the selected mood
  */
@@ -67,6 +72,15 @@ const randomNumberBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+// TODO Ingrid:
+//   1. Implement the algorithm:
+//      - Fetch the list of quotes
+//      - If I have a quote in my state (the `applicationState.quote` field is not null), then add the `applicationState.quote` value to the history
+//      - select randomly a quote from the list of fetched quotes
+//      - update my `applicationState.quote` with this selected randomly quote
+//      - update the display with the new state
+//
+
 /**
  * Function to handle mood button clicks
  */
@@ -74,16 +88,23 @@ const showRandomQuote = async (mood) => {
     // Fetch the quotes corresponding to the mood from the BE
     const fetchedQuotes = await fetchCorrespondingQuotes(mood);
 
+    const hasPreviousQuote = applicationState.quote != null
+    if (hasPreviousQuote) {
+        applicationState.history.push(applicationState.quote);
+    }
+
     // Select a random quote from the fetched quotes
     const lastArrayIndex = fetchedQuotes.length - 1
     const selectedQuoteIndex = randomNumberBetween(0, lastArrayIndex)
     const selectedQuote = fetchedQuotes[selectedQuoteIndex];
 
+    applicationState.quote = selectedQuote;
+
     // Display the selected quote
     const selectedQuoteText = selectedQuote.q;
     const selectQuoteAuthor = selectedQuote.a;
-    displayQuote(selectedQuoteText, selectQuoteAuthor);
 
+    displayQuote(selectedQuoteText, selectQuoteAuthor);
 };
 
 
