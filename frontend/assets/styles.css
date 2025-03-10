@@ -1,4 +1,25 @@
-html,
+html {
+    height: auto;
+    min-height: 100%;
+}
+
 body {
-    height: 100%;
+    /*
+        - Color palette used: https://coolors.co/palette/cdb4db-ffc8dd-ffafcc-bde0fe-a2d2ff
+        - Website used to make gradient: https://cssgradient.io/
+    */
+    background: rgb(205, 180, 219);
+    background: linear-gradient(153deg, rgba(205, 180, 219, 1) 0%, rgba(255, 200, 221, 1) 15%, rgba(255, 175, 204, 1) 50%, rgba(189, 224, 254, 1) 90%, rgba(162, 210, 255, 1) 100%);
+}
+
+/* Font coming from: https://fonts.google.com/selection/embed */
+.delius-swash-caps-regular {
+    font-family: "Delius Swash Caps", cursive;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.italic-white {
+    font-style: italic;
+    color: white;
 }
