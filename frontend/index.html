@@ -9,12 +9,16 @@
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">MoodFlow</span>
+    </div>
+</nav>
 <div class="container">
-    <h1>MoodFlow - How are you feeling today?</h1>
+    <h1>How are you feeling today?</h1>
 
     <!-- Mood Selection -->
     <div id="mood-selector">
-        <h2>Motivational Quote</h2>
         <p>Click on a mood to receive a quote!</p>
         <button class="btn btn-primary" onclick="showRandomQuote('happy')">😊 Happy</button>
         <button class="btn btn-primary" onclick="showRandomQuote('uplifting')">😢 Sad</button>
