@@ -22,6 +22,11 @@ searchQuoteDropdownElement
         displayHistory()
     })
 
+// Error toast code
+// Comes from https://getbootstrap.com/docs/5.3/components/toasts/#overview
+const errorToastElement = document.getElementById('liveToast')
+const errorToast = bootstrap.Toast.getOrCreateInstance(errorToastElement)
+
 /**
  * Function to fetch a quote based on the selected mood
  */
@@ -31,13 +36,13 @@ const fetchCorrespondingQuotes = async (mood) => {
         const response = await fetch(`http://localhost:3000/${mood}`);
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            errorToast.show()
         }
 
         return await response.json(); // Convert response to JSON
     } catch (error) {
         console.error(`Error fetching quote: ${error}`);
-        throw `Error fetching quote: ${error}`;
+        errorToast.show()
     }
 };
 
